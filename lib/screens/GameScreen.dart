@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:color_game/screens/EndGameScreen.dart';
 import 'package:color_game/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -26,19 +27,30 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void changeRequiredColor() {
-    requiredColor = (widget.level == 3)
-        ? colors3x[pickRandomNumber()]
-        : (widget.level == 4)
-        ? colors4x[pickRandomNumber()]
-        : colors5x[pickRandomNumber()];
+    setState(() {
+      requiredColor = (widget.level == 3)
+          ? colors3x[pickRandomNumber()]
+          : (widget.level == 4)
+          ? colors4x[pickRandomNumber()]
+          : colors5x[pickRandomNumber()];
+    });
   }
 
   void _timerFunction() {
     Future.delayed(Duration(seconds: 1)).then((value) {
-      setState(() {
-        second--;
-      });
-      _timerFunction();
+      if (second != 0) {
+        setState(() {
+          second--;
+        });
+        _timerFunction();
+      } else {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => EndGameScreen(
+                      userScore: score,
+                    )));
+      }
     });
   }
 
@@ -54,73 +66,79 @@ class _GameScreenState extends State<GameScreen> {
         ),
         body: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      "Time: " + second.toString(),
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                    ),
-                    Text(
-                      "Score: " + score.toString(),
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: 50,
-                ),
-                Container(
-                  width: 100,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: requiredColor,
-                      border: Border.all(color: Colors.black87, width: 3)),
-                )
-              ],
-            ),
+            InfoPart(),
             SizedBox(
               height: 100,
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: GridView.builder(
-                    itemCount: widget.level * widget.level,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: widget.level,
-                        crossAxisSpacing: 8,
-                        mainAxisSpacing: 8,
-                        childAspectRatio: 1),
-                    itemBuilder: (context, index) {
-                      var boxColor = (widget.level == 3)
-                          ? colors3x[pickRandomNumber()]
-                          : (widget.level == 4)
-                          ? colors4x[pickRandomNumber()]
-                          : colors5x[pickRandomNumber()];
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (boxColor == requiredColor) {
-                              score += 10;
-                            } else {
-                              score -= 10;
-                            }
-                          });
-                          changeRequiredColor();
-                        },
-                        child: Container(color: boxColor),
-                      );
-                    }),
-              ),
-            )
+            GridPart()
           ],
         ),
       ),
+    );
+  }
+
+  Expanded GridPart() {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: GridView.builder(
+            itemCount: widget.level * widget.level,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: widget.level,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                childAspectRatio: 1),
+            itemBuilder: (context, index) {
+              var boxColor = (widget.level == 3)
+                  ? colors3x[pickRandomNumber()]
+                  : (widget.level == 4)
+                  ? colors4x[pickRandomNumber()]
+                  : colors5x[pickRandomNumber()];
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (boxColor == requiredColor) {
+                      score += 10;
+                    } else {
+                      score -= 10;
+                    }
+                  });
+                  changeRequiredColor();
+                },
+                child: Container(color: boxColor),
+              );
+            }),
+      ),
+    );
+  }
+
+  Row InfoPart() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Column(
+          children: [
+            Text(
+              "Time: " + second.toString(),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+            ),
+            Text(
+              "Score: " + score.toString(),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+            ),
+          ],
+        ),
+        SizedBox(
+          width: 50,
+        ),
+        Container(
+          width: 100,
+          height: 50,
+          decoration: BoxDecoration(
+              color: requiredColor,
+              border: Border.all(color: Colors.black87, width: 3)),
+        )
+      ],
     );
   }
 

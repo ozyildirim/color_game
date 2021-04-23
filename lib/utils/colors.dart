@@ -8,7 +8,7 @@ List<Color> colors3x = [
   Colors.tealAccent,
   Colors.indigo,
   Colors.deepOrangeAccent,
-  Colors.cyanAccent,
+  Colors.white,
   Colors.deepPurple
 ];
 
@@ -20,7 +20,7 @@ List<Color> colors4x = [
   Colors.tealAccent,
   Colors.indigo,
   Colors.deepOrangeAccent,
-  Colors.cyanAccent,
+  Colors.white,
   Colors.deepPurple,
   Colors.teal,
   Colors.purple,
@@ -36,7 +36,7 @@ List<Color> colors5x = [
   Colors.yellow,
   Colors.black,
   Colors.grey,
-  Colors.tealAccent,
+  Colors.white,
   Colors.indigo,
   Colors.deepOrangeAccent,
   Colors.cyanAccent,

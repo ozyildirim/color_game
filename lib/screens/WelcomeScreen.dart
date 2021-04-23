@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:color_game/screens/LevelScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,39 +13,74 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.amber,
-        body: Column(
-          children: [
-            Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Welcome",
-                      textAlign: TextAlign.left,
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/background.png'),
+                  fit: BoxFit.cover)),
+          child: Column(
+            children: [
+              Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Be",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            DefaultTextStyle(
+                              style: const TextStyle(
+                                fontSize: 40.0,
+                                fontFamily: 'Horizon',
+                              ),
+                              child: AnimatedTextKit(
+                                  repeatForever: true,
+                                  animatedTexts: [
+                                    RotateAnimatedText('FAST'),
+                                    RotateAnimatedText('HAPPY'),
+                                    RotateAnimatedText('DIFFERENT'),
+                                  ]),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                )),
-            Expanded(
-                flex: 1,
-                child: Center(
-                  child: FlatButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LevelScreen()));
-                    },
-                    child: Text("Start Game"),
-                    color: Colors.white,
-                    height: 80,
-                  ),
-                ))
-          ],
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: Center(
+                    child: FlatButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LevelScreen()));
+                      },
+                      child: Text(
+                        "Start Game",
+                        style: TextStyle(fontSize: 30, color: Colors.black),
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      color: Colors.white,
+                      height: 80,
+                    ),
+                  ))
+            ],
+          ),
         ),
       ),
     );
