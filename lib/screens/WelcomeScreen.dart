@@ -28,30 +28,46 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       alignment: Alignment.centerLeft,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Row(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Be",
+                              "Color Game",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 35,
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
-                              width: 20,
+                              height: 100,
                             ),
-                            DefaultTextStyle(
-                              style: const TextStyle(
-                                fontSize: 40.0,
-                                fontFamily: 'Horizon',
-                              ),
-                              child: AnimatedTextKit(
-                                  repeatForever: true,
-                                  animatedTexts: [
-                                    RotateAnimatedText('FAST'),
-                                    RotateAnimatedText('HAPPY'),
-                                    RotateAnimatedText('DIFFERENT'),
-                                  ]),
+                            Row(
+                              children: [
+                                Text(
+                                  "Be",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 35,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                DefaultTextStyle(
+                                  style: const TextStyle(
+                                    fontSize: 40.0,
+                                    fontFamily: 'Horizon',
+                                  ),
+                                  child: AnimatedTextKit(
+                                      repeatForever: true,
+                                      animatedTexts: [
+                                        RotateAnimatedText('FAST'),
+                                        RotateAnimatedText('HAPPY'),
+                                        RotateAnimatedText('DIFFERENT'),
+                                      ]),
+                                ),
+                              ],
                             ),
                           ],
                         ),

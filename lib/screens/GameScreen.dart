@@ -16,7 +16,7 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   int score = 0;
   bool answer = true;
-  int second = 60;
+  int second = 5;
 
   Color requiredColor = Colors.white;
   Color selectedColor = Colors.white;
